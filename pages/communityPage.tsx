@@ -50,11 +50,11 @@ export const CommunityPage = (): React.ReactNode => {
   const scrollPositionRef = useRef<number>(0);
   const scrollViewRef = useRef<ScrollView>(null);
 
-  const scrollingCB = () =>
+  const scrollingCB = (ms: number) =>
     setTimeout(() => {
       if (scrollViewRef.current) {
         scrollViewRef.current.scrollTo({
-          y: scrollPositionRef.current + 20,
+          y: scrollPositionRef.current + ms,
           animated: true,
         });
       }
@@ -67,7 +67,7 @@ export const CommunityPage = (): React.ReactNode => {
         // If using redux, no need for this logic
         const { metadata, posts } = initialPosts;
         setMetaData(metadata);
-        addToPosts(posts, scrollingCB);
+        addToPosts(posts, () => scrollingCB(20));
         // Code would instead be used to handle UI aspects, like loading icons
       }
     };
@@ -84,7 +84,7 @@ export const CommunityPage = (): React.ReactNode => {
       // If using redux, no need for this logic
       const { metadata, posts } = newPosts;
       setMetaData(metadata);
-      addToPosts(posts, scrollingCB);
+      addToPosts(posts, () => scrollingCB(175));
       // Code would instead be used to handle UI aspects, like loading icons
     }
   };

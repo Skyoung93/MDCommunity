@@ -48,7 +48,6 @@ export const PostEntry = ({
       >
         <View
           style={{
-            // maxHeight: 50,
             maxHeight: 100,
             overflow: 'hidden',
             paddingHorizontal: 10,
@@ -63,17 +62,12 @@ export const PostEntry = ({
         </View>
         <View
           style={{
-            width: '100%',
-            marginLeft: 10,
-            backgroundColor: '#A0A0A0',
-            height: 3,
-          }}
-        />
-        <View
-          style={{
-            maxHeight: 100,
+            borderStyle: 'solid',
+            borderWidth: 2,
+            borderColor: 'black',
+            borderRadius: 15,
+            padding: 10,
             overflow: 'hidden',
-            paddingHorizontal: 10,
           }}
         >
           <Typography
@@ -90,14 +84,6 @@ export const PostEntry = ({
             {post.patient_description}
           </Typography>
         </View>
-        <View
-          style={{
-            width: '100%',
-            marginLeft: 10,
-            backgroundColor: '#A0A0A0',
-            height: 3,
-          }}
-        />
         <View
           style={{
             flexDirection: 'row',
@@ -173,11 +159,31 @@ export const PostEntry = ({
         </View>
       </TouchableOpacity>
       {showComments ? (
-        <View style={{ gap: 20, padding: 20, width: '100%' }}>
-          <CommentsCard
-            commentsDict={comments}
-            selectedPostIndex={index}
+        <View
+          style={{
+            paddingTop: 20,
+            alignItems: 'center',
+          }}
+        >
+          <View
+            style={{
+              width: '75%',
+              backgroundColor: '#A0A0A0',
+              height: 3,
+            }}
           />
+          <View
+            style={{
+              gap: 20,
+              padding: 20,
+              width: '100%',
+            }}
+          >
+            <CommentsCard
+              commentsDict={comments}
+              selectedPostIndex={index}
+            />
+          </View>
         </View>
       ) : null}
     </Card>

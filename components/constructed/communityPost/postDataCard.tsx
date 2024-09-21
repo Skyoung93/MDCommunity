@@ -44,7 +44,7 @@ export const PostDataCard: React.FC<PostDataCardProps> = ({
     comments,
     created_at,
   } = post;
-  const commentCount = Object.keys(comments).length + 1;
+  const commentCount = Object.keys(comments).length;
   const clickHug = () => {
     handleHugClick(selectedPostIndex, !userHugged);
   };
