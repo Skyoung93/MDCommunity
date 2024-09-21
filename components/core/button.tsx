@@ -11,7 +11,7 @@ import {
 type ButtonProps = {
   size?: 'default' | 'small' | 'medium' | 'large';
   variant?: 'default' | 'error' | 'warning' | 'success' | 'active';
-  children: React.ReactNode;
+  children?: React.ReactNode;
   onClick: () => void;
   style?: ViewStyle; // Custom container style
   textStyle?: TextStyle; // Custom text style
@@ -149,16 +149,18 @@ export const Button: React.FC<ButtonProps> = ({
     >
       {leftIcon ? <View>{leftIcon}</View> : null}
 
-      <Text
-        style={[
-          textVariantStyles.base,
-          selectedTextSize,
-          selectedTextVariant,
-          textStyle,
-        ]}
-      >
-        {children}
-      </Text>
+      {children ? (
+        <Text
+          style={[
+            textVariantStyles.base,
+            selectedTextSize,
+            selectedTextVariant,
+            textStyle,
+          ]}
+        >
+          {children}
+        </Text>
+      ) : null}
       {rightIcon ? <View>{rightIcon}</View> : null}
     </TouchableOpacity>
   );

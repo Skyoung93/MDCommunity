@@ -21,15 +21,6 @@ export const CommunityPostCard: React.FC<CommunityPostCardProps> = ({
   if (selectedPost === undefined || selectedPostIndex === undefined)
     return null;
 
-  const {
-    title,
-    created_at,
-    patient_description,
-    assessment,
-    num_hugs,
-    comments,
-    userHugged,
-  } = selectedPost;
   return (
     <ScrollView
       contentContainerStyle={{
@@ -40,21 +31,14 @@ export const CommunityPostCard: React.FC<CommunityPostCardProps> = ({
       }}
     >
       <PostDataCard
-        title={title}
+        post={selectedPost}
         selectedPostIndex={selectedPostIndex}
-        created_at={created_at}
-        patient_description={patient_description}
-        assessment={assessment}
-        num_hugs={num_hugs}
         handleHugClick={handlePostHugClick}
-        commentCount={Object.keys(comments).length}
-        userHugged={userHugged}
       />
       <Card style={{ gap: 20, padding: 20, width: '100%' }}>
         <CommentsCard
-          commentsDict={comments}
+          commentsDict={selectedPost.comments}
           selectedPostIndex={selectedPostIndex}
-          // handleHugClick={handleCommentHugClick}
         />
       </Card>
     </ScrollView>

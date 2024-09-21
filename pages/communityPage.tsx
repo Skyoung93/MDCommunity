@@ -7,13 +7,11 @@ import {
   NativeScrollEvent,
   NativeSyntheticEvent,
   ScrollView,
-  StyleSheet,
+  Text,
   View,
 } from 'react-native';
-import { Post } from 'types/post';
 import { debounceFn } from 'utils/debounceFn';
 import AntIcon from 'react-native-vector-icons/AntDesign';
-import { UpdatePostAPI } from 'api/updatePostAPI';
 import StatusCode from 'types/statusCodes';
 import { Modal } from 'components/core/modal';
 import { CommunityPostCard } from 'components/constructed/communityPost/communityPostCard';
@@ -21,8 +19,10 @@ import { useDatastoreContext } from 'state/communityContext';
 import { Card } from 'components/core/card';
 import { Typography } from 'components/core/typography';
 import FAIcon from 'react-native-vector-icons/FontAwesome';
-import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { GetPostsService } from 'services/getPostsService';
+
+import { GetPostsService } from 'services/posts/getPostsService';
+import { Button } from 'components/core/button';
+import { Settings } from 'components/constructed/settings/settings';
 
 export const CommunityPage = (): React.ReactNode => {
   const {
@@ -39,11 +39,13 @@ export const CommunityPage = (): React.ReactNode => {
     updatePostNumHugFn,
   } = useDatastoreContext();
 
-  const [showModal, setShowModal] = useState<boolean>(false);
-  const handleCloseModal = () => {
-    setShowModal(false);
+  const [showPostModal, setShowPostModal] = useState<boolean>(false);
+  const handleClosePostModal = () => {
+    setShowPostModal(false);
     setSelectedPostIndex(undefined);
   };
+
+  const [showSettingModal, setShowSettingModal] = useState<boolean>(false);
 
   const scrollPositionRef = useRef<number>(0);
   const scrollViewRef = useRef<ScrollView>(null);
@@ -88,7 +90,7 @@ export const CommunityPage = (): React.ReactNode => {
   };
 
   const handleSelectedPostClick = (index: number) => {
-    setShowModal(true);
+    setShowPostModal(true);
     setSelectedPostIndex(index);
   };
 
@@ -119,10 +121,27 @@ export const CommunityPage = (): React.ReactNode => {
   };
 
   return (
-    <View style={styles.page}>
+    <View
+      style={{
+        flex: 1,
+        paddingTop: 55,
+        backgroundColor: '#A0A0A0',
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}
+    >
       <ScrollView
         ref={scrollViewRef}
-        contentContainerStyle={styles.content}
+        contentContainerStyle={{
+          paddingTop: 20,
+          paddingBottom: 20,
+          display: 'flex',
+          gap: 10,
+          width: '100%',
+          paddingHorizontal: 5,
+          alignItems: 'center',
+          justifyContent: 'flex-start',
+        }}
         onScrollEndDrag={handleScroll}
         onScroll={handleScroll}
         scrollEventThrottle={16}
@@ -136,21 +155,26 @@ export const CommunityPage = (): React.ReactNode => {
             alignItems: 'center',
           }}
         >
-          <View
+          <Button
             style={{
               justifyContent: 'center',
               alignItems: 'center',
+              backgroundColor: 'white',
             }}
+            textStyle={{
+              color: 'black',
+            }}
+            onClick={() => setShowSettingModal(true)}
           >
-            <MCIcon
-              name="meditation"
+            <AntIcon
+              name="setting"
               style={{
-                fontSize: 55,
+                fontSize: 45,
                 justifyContent: 'center',
                 alignItems: 'center',
               }}
             />
-          </View>
+          </Button>
           <View
             style={{
               justifyContent: 'center',
@@ -203,8 +227,8 @@ export const CommunityPage = (): React.ReactNode => {
         )}
       </ScrollView>
       <Modal
-        open={showModal}
-        onClose={handleCloseModal}
+        open={showPostModal}
+        onClose={handleClosePostModal}
         title="Community Post"
         fullScreen
       >
@@ -214,26 +238,13 @@ export const CommunityPage = (): React.ReactNode => {
           handlePostHugClick={handleHugClick}
         />
       </Modal>
+      <Modal
+        open={showSettingModal}
+        onClose={() => setShowSettingModal(false)}
+        title="User Settings"
+      >
+        <Settings />
+      </Modal>
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  page: {
-    flex: 1,
-    paddingTop: 55,
-    backgroundColor: '#A0A0A0',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  content: {
-    paddingTop: 20,
-    paddingBottom: 20,
-    display: 'flex',
-    gap: 10,
-    width: '100%',
-    paddingHorizontal: 5,
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-  },
-});

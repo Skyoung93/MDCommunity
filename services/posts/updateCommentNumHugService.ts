@@ -1,4 +1,4 @@
-import { UpdatePostAPI } from 'api/updatePostAPI';
+import { UpdatePostAPI } from 'api/posts/updatePostAPI';
 import { Post } from 'types/post';
 import StatusCode from 'types/statusCodes';
 

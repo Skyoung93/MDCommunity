@@ -46,6 +46,8 @@ In some way I like how React Native embraces stylesheets as the start of styling
 
 In this project I went with a simple Context to manage the state of the front end. My reasons for this was primarily because the scope of the data management in this project is not so complicated as that it would demand a solution such as Redux.
 
+However to prove a point that I am capable of managing prop drilling I have also done examples of such, primarily in the communityPostCard
+
 I think the biggest reason against going for a heavy handed Redux solution is merely because the number of times that that state in the Context would be updated is low enough that it won't trigger full App rerenders. If the project had more pages that all access the same data then going with Redux would have been more appropriate.
 
 ### Functionality Adjustments & Changes

@@ -1,4 +1,4 @@
-import { GetPostsAPI } from 'api/getPostsAPI';
+import { GetPostsAPI } from 'api/posts/getPostsAPI';
 import { Post, PostMetaData } from 'types/post';
 import StatusCode from 'types/statusCodes';
 

@@ -1,4 +1,4 @@
-import { UpdatePostAPI } from 'api/updatePostAPI';
+import { UpdatePostAPI } from 'api/posts/updatePostAPI';
 import { Post } from 'types/post';
 import StatusCode from 'types/statusCodes';
 
@@ -16,8 +16,6 @@ export const UpdatePostNumHugService = async ({
   const selectedPost = posts[index];
   const { num_hugs } = selectedPost;
   const hugCount = userHugged ? num_hugs + 1 : num_hugs - 1;
-
-  console.log(hugCount);
 
   const updatedPost: Post = { ...selectedPost, num_hugs: hugCount, userHugged };
   const response = await UpdatePostAPI({ updatedPost });

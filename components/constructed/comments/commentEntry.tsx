@@ -3,7 +3,7 @@ import { Button } from 'components/core/button';
 import { Typography } from 'components/core/typography';
 import { formatDistanceToNow } from 'date-fns';
 import { View } from 'react-native';
-import { Comment } from 'types/comment';
+import { Comment, FocusedEntryType } from 'types/comment';
 import AntIcon from 'react-native-vector-icons/AntDesign';
 import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useDatastoreContext } from 'state/communityContext';
@@ -18,6 +18,7 @@ type CommentEntryProps = {
   depth: number;
   runningDepthThreshold?: number;
   increaseRunningDepthThreshold?: () => void;
+  setFocusedEntry: (entry: undefined | FocusedEntryType) => void;
 };
 
 type CommentEntryUIProps = {
@@ -28,6 +29,7 @@ type CommentEntryUIProps = {
   increaseRunningDepthThreshold: () => void;
   backgroundColor: string;
   textColor: string;
+  setFocusedEntry: (entry: undefined | FocusedEntryType) => void;
 };
 
 const CommentEntryUI: React.FC<CommentEntryUIProps> = ({
@@ -38,6 +40,7 @@ const CommentEntryUI: React.FC<CommentEntryUIProps> = ({
   increaseRunningDepthThreshold,
   backgroundColor,
   textColor,
+  setFocusedEntry,
 }) => {
   const { display_name, text, created_at, userHugged, num_hugs } = comment;
   const { updateCommentNumHugFn } = useDatastoreContext();
@@ -95,7 +98,15 @@ const CommentEntryUI: React.FC<CommentEntryUIProps> = ({
         <View style={{ padding: 10, flex: 1 }}>
           <Typography variant="default">{text}</Typography>
         </View>
-        <View style={{ justifyContent: 'center', alignItems: 'flex-end' }}>
+        <View
+          style={{
+            justifyContent: 'space-between',
+            flexDirection: 'row',
+            paddingVertical: 5,
+            paddingHorizontal: 10,
+            gap: 10,
+          }}
+        >
           <Button
             variant={userHugged ? 'active' : null}
             leftIcon={
@@ -105,9 +116,26 @@ const CommentEntryUI: React.FC<CommentEntryUIProps> = ({
               />
             }
             onClick={clickHug}
-            style={{ minWidth: 120, justifyContent: 'center' }}
+            style={{ justifyContent: 'center' }}
           >
-            {`(${num_hugs > 0 ? num_hugs : 0})`}
+            {`${num_hugs > 0 ? num_hugs : 0}`}
+          </Button>
+          <Button
+            leftIcon={
+              <FAIcon
+                name="reply"
+                color={'#2b2b2b'}
+              />
+            }
+            onClick={() =>
+              setFocusedEntry({
+                index: selectedPostIndex,
+                comment,
+              })
+            }
+            style={{ justifyContent: 'center' }}
+          >
+            Reply
           </Button>
         </View>
       </View>
@@ -129,6 +157,7 @@ const CommentEntryUI: React.FC<CommentEntryUIProps> = ({
                 depth={depth + 1}
                 runningDepthThreshold={runningDepthThreshold}
                 increaseRunningDepthThreshold={increaseRunningDepthThreshold}
+                setFocusedEntry={setFocusedEntry}
               />
             ))
           ) : (
@@ -165,6 +194,7 @@ export const CommentEntry: React.FC<CommentEntryProps> = ({
   depth,
   runningDepthThreshold,
   increaseRunningDepthThreshold,
+  setFocusedEntry,
 }) => {
   const { backgroundColor, textColor } = convertToHexCode(comment.display_name);
   const [depthThreshold, setDepthThreshold] = useState<number>(1);
@@ -187,6 +217,7 @@ export const CommentEntry: React.FC<CommentEntryProps> = ({
       }
       backgroundColor={backgroundColor}
       textColor={textColor}
+      setFocusedEntry={setFocusedEntry}
     />
   );
 };

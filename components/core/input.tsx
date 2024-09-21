@@ -15,28 +15,7 @@ export type InputProps = {
   variant?: 'default' | 'error' | 'warning' | 'success';
   style?: ViewStyle; // Custom container style
   inputStyle?: TextStyle; // Custom input text style
-};
-
-const inputSizeStyles = StyleSheet.create({
-  default: {
-    height: 50,
-  },
-  small: {
-    height: 40,
-  },
-  medium: {
-    height: 60,
-  },
-  large: {
-    height: 70,
-  },
-});
-
-const inputSize = {
-  default: inputSizeStyles.default,
-  small: inputSizeStyles.small,
-  medium: inputSizeStyles.medium,
-  large: inputSizeStyles.large,
+  multiline?: boolean;
 };
 
 const inputVariantStyles = StyleSheet.create({
@@ -69,36 +48,30 @@ const Input = ({
   value,
   onChange,
   placeholder = '',
-  size = 'default',
   variant = 'default',
   style,
   inputStyle,
+  multiline,
 }: InputProps) => {
-  const selectedInputSize = inputSize[size] || inputSize.default;
   const selectedInputVariant = inputVariant[variant] || inputVariant.default;
 
   return (
-    <View style={[styles.inputContainer, style]}>
+    <View style={style}>
       <TextInput
-        style={[
-          styles.input,
-          selectedInputSize,
-          selectedInputVariant,
-          inputStyle,
-        ]}
+        style={[styles.input, selectedInputVariant, inputStyle]}
         value={value}
         onChangeText={onChange}
         placeholder={placeholder}
         placeholderTextColor="#999"
+        multiline={multiline}
+        scrollEnabled={multiline}
+        numberOfLines={multiline ? undefined : 1}
       />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  inputContainer: {
-    marginBottom: 15,
-  },
   input: {
     borderWidth: 1,
     borderRadius: 8,

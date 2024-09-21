@@ -1,3 +1,5 @@
+import { Post } from './post';
+
 export type CommentDict = {
   [commentID: string]: Comment;
 };
@@ -11,6 +13,43 @@ export type Comment = {
   num_hugs: number;
   userHugged: boolean;
   children: Comment[];
+};
+
+export type FocusedEntryType = {
+  index: number;
+  post?: Post;
+  comment?: Comment;
+};
+
+export const CommentConstructor = ({
+  id,
+  parent_id,
+  display_name,
+  text,
+  created_at = new Date().toISOString(),
+  num_hugs = 1,
+  userHugged = false,
+  children = [],
+}: {
+  id: number;
+  parent_id: number;
+  display_name: string;
+  text: string;
+  created_at?: string;
+  num_hugs?: number;
+  userHugged?: boolean;
+  children?: Comment[];
+}) => {
+  return {
+    id,
+    parent_id,
+    display_name,
+    text,
+    created_at,
+    num_hugs,
+    userHugged,
+    children,
+  };
 };
 
 // Transformer function to create nested and sorted comments

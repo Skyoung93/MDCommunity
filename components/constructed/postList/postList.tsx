@@ -1,13 +1,10 @@
-import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import React, { useState } from 'react';
+import { View } from 'react-native';
 import { Post } from 'types/post';
 import { PostEntry } from './postEntry';
-
-const postListStyles = StyleSheet.create({
-  listContainer: {
-    gap: 7,
-  },
-});
+import { FocusedEntryType } from 'types/comment';
+import { AddCommentCard } from '../comments/addCommentCard';
+import { Modal } from 'components/core/modal';
 
 type PostListProps = {
   posts: Post[];
@@ -20,8 +17,17 @@ export const PostList = ({
   handleSelectedPostClick,
   handleHugClick,
 }: PostListProps): React.ReactNode => {
+  const [focusedEntry, setFocusedEntry] = useState<
+    FocusedEntryType | undefined
+  >(undefined);
+  const closeCommentsCard = () => setFocusedEntry(undefined);
+
   return (
-    <View style={postListStyles.listContainer}>
+    <View
+      style={{
+        gap: 7,
+      }}
+    >
       {posts.map((post, index) => {
         return (
           <PostEntry
@@ -30,9 +36,21 @@ export const PostList = ({
             onCardClick={() => handleSelectedPostClick(index)}
             onHugClick={handleHugClick}
             index={index}
+            setFocusedEntry={setFocusedEntry}
           />
         );
       })}
+      <Modal
+        open={focusedEntry !== undefined}
+        onClose={closeCommentsCard}
+        title="Reply To Post"
+        fullScreen
+      >
+        <AddCommentCard
+          focusedEntry={focusedEntry}
+          closeCommentsCard={closeCommentsCard}
+        />
+      </Modal>
     </View>
   );
 };

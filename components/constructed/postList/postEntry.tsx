@@ -5,15 +5,17 @@ import { Button } from 'components/core/button';
 import { Card } from 'components/core/card';
 import { Typography } from 'components/core/typography';
 import { Post } from 'types/post';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { TouchableOpacity, View } from 'react-native';
 import { useState } from 'react';
 import { CommentsCard } from '../comments/commentsCard';
+import { FocusedEntryType } from 'types/comment';
 
 type PostEntryProps = {
   post: Post;
   onCardClick?: (index: number) => void;
   onHugClick?: (index: number, userHugged: boolean) => void;
   index: number;
+  setFocusedEntry: (entry: undefined | FocusedEntryType) => void;
 };
 
 export const PostEntry = ({
@@ -21,6 +23,7 @@ export const PostEntry = ({
   onCardClick,
   onHugClick,
   index,
+  setFocusedEntry,
 }: PostEntryProps): React.ReactNode => {
   const { userHugged, comments } = post;
   const clickHug = () => {
@@ -106,6 +109,8 @@ export const PostEntry = ({
             style={{
               flexDirection: 'row',
               gap: 5,
+              justifyContent: 'space-evenly',
+              flexGrow: 1,
             }}
           >
             <Button
@@ -117,10 +122,9 @@ export const PostEntry = ({
                 />
               }
               onClick={clickHug}
-              style={{ minWidth: 120, justifyContent: 'center' }}
+              style={{ justifyContent: 'center' }}
             >
-              Hugs
-              {` (${post.num_hugs > 0 ? post.num_hugs : 0})`}
+              {`${post.num_hugs > 0 ? post.num_hugs : 0}`}
             </Button>
             <Button
               onClick={toggleShowComments}
@@ -131,13 +135,27 @@ export const PostEntry = ({
                 />
               }
             >
-              Comments
-              {` (${
+              {`${
                 Object.keys(post.comments).length > 0
                   ? Object.keys(post.comments).length
                   : 0
-              })`}
+              }`}
             </Button>
+            <Button
+              leftIcon={
+                <FAIcon
+                  name="reply"
+                  color={'#2b2b2b'}
+                />
+              }
+              onClick={() =>
+                setFocusedEntry({
+                  index,
+                  post,
+                })
+              }
+              style={{ justifyContent: 'center', paddingHorizontal: 20 }}
+            />
           </View>
           <View
             style={{

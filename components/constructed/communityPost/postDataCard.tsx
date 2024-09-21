@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { TouchableOpacity, View, Text, StyleSheet } from 'react-native';
+import { TouchableOpacity, View, Text } from 'react-native';
 
 import AntIcon from 'react-native-vector-icons/AntDesign';
 import FAIcon from 'react-native-vector-icons/FontAwesome';
@@ -10,32 +10,41 @@ import { Card } from 'components/core/card';
 import { Typography } from 'components/core/typography';
 import { formatDistanceToNow } from 'date-fns';
 import Markdown from 'react-native-markdown-display';
+import { FocusedEntryType } from 'types/comment';
+import { Modal } from 'components/core/modal';
+import { AddCommentCard } from '../comments/addCommentCard';
+import { Post } from 'types/post';
 
 const iconScale = 1.75;
 
 type PostDataCardProps = {
-  title: string;
-  patient_description: string;
-  assessment: string;
+  // title: string;
+  // patient_description: string;
+  // assessment: string;
+  // created_at: string;
+  // num_hugs: number;
+  // commentCount: number;
+  // userHugged: boolean;
+  post: Post;
   selectedPostIndex: number;
-  created_at: string;
   handleHugClick: (index: number, userHugged: boolean) => void;
-  num_hugs: number;
-  commentCount: number;
-  userHugged: boolean;
 };
 
 export const PostDataCard: React.FC<PostDataCardProps> = ({
-  title,
-  patient_description,
-  assessment,
+  post,
   selectedPostIndex,
-  created_at,
   handleHugClick,
-  num_hugs,
-  commentCount,
-  userHugged,
 }) => {
+  const {
+    userHugged,
+    assessment,
+    title,
+    patient_description,
+    num_hugs,
+    comments,
+    created_at,
+  } = post;
+  const commentCount = Object.keys(comments).length + 1;
   const clickHug = () => {
     handleHugClick(selectedPostIndex, !userHugged);
   };
@@ -56,26 +65,10 @@ export const PostDataCard: React.FC<PostDataCardProps> = ({
     setIsAssessmentTruncated(true); // Replace with actual logic if necessary
   }, [assessment]);
 
-  const markdownStyles = StyleSheet.create({
-    heading3: {
-      fontSize: 20,
-      color: '#2b2b2b',
-      fontWeight: '900',
-      textDecorationLine: 'underline',
-      marginBottom: 6,
-    },
-    paragraph: {
-      fontSize: 18,
-      color: '#2b2b2b',
-      marginBottom: 12,
-    },
-    list_item: {
-      fontSize: 16,
-      fontWeight: 'bold',
-      color: '#2b2b2b',
-      marginBottom: 6,
-    },
-  });
+  const [focusedEntry, setFocusedEntry] = useState<
+    FocusedEntryType | undefined
+  >(undefined);
+  const closeCommentsCard = () => setFocusedEntry(undefined);
 
   return (
     <Card style={{ gap: 20, padding: 20, width: '100%' }}>
@@ -184,7 +177,30 @@ export const PostDataCard: React.FC<PostDataCardProps> = ({
                 padding: 4,
               }}
             >
-              <Markdown style={markdownStyles}>{assessment}</Markdown>
+              <Markdown
+                style={{
+                  heading3: {
+                    fontSize: 20,
+                    color: '#2b2b2b',
+                    fontWeight: '900',
+                    textDecorationLine: 'underline',
+                    marginBottom: 6,
+                  },
+                  paragraph: {
+                    fontSize: 18,
+                    color: '#2b2b2b',
+                    marginBottom: 12,
+                  },
+                  list_item: {
+                    fontSize: 16,
+                    fontWeight: 'bold',
+                    color: '#2b2b2b',
+                    marginBottom: 6,
+                  },
+                }}
+              >
+                {assessment}
+              </Markdown>
             </View>
             {isAssessmentTruncated && !showAssessment ? (
               <Text style={{ marginTop: -5 }}>{'  ...'}</Text>
@@ -222,7 +238,7 @@ export const PostDataCard: React.FC<PostDataCardProps> = ({
             onClick={clickHug}
             style={{ justifyContent: 'center' }}
           >
-            {`(${num_hugs > 0 ? num_hugs : 0})`}
+            {`${num_hugs > 0 ? num_hugs : 0}`}
           </Button>
           <Badge
             leftIcon={
@@ -232,8 +248,23 @@ export const PostDataCard: React.FC<PostDataCardProps> = ({
               />
             }
           >
-            {`(${commentCount > 0 ? commentCount : 0})`}
+            {`${commentCount > 0 ? commentCount : 0}`}
           </Badge>
+          <Button
+            leftIcon={
+              <FAIcon
+                name="reply"
+                color={'#2b2b2b'}
+              />
+            }
+            onClick={() =>
+              setFocusedEntry({
+                index: selectedPostIndex,
+                post,
+              })
+            }
+            style={{ justifyContent: 'center', paddingHorizontal: 20 }}
+          />
         </View>
         <View style={{ justifyContent: 'center', alignItems: 'center' }}>
           <Typography
@@ -244,6 +275,17 @@ export const PostDataCard: React.FC<PostDataCardProps> = ({
           </Typography>
         </View>
       </View>
+      <Modal
+        open={focusedEntry !== undefined}
+        onClose={closeCommentsCard}
+        title="Reply To Post"
+        fullScreen
+      >
+        <AddCommentCard
+          focusedEntry={focusedEntry}
+          closeCommentsCard={closeCommentsCard}
+        />
+      </Modal>
     </Card>
   );
 };

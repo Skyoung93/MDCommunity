@@ -14,6 +14,16 @@ type ModalProps = {
   title?: string;
 };
 
+type FullScreenModalProps = {
+  onClose?: () => void;
+  title: string;
+  children: React.ReactNode;
+};
+type RegularModalProps = {
+  onClose?: () => void;
+  children: React.ReactNode;
+};
+
 const cardStyle = {
   borderRadius: 15,
   backgroundColor: '#ffffff',
@@ -25,6 +35,92 @@ const cardStyle = {
   minHeight: 100,
   padding: 10,
 };
+
+const FullScreenModal: React.FC<FullScreenModalProps> = ({
+  onClose,
+  title,
+  children,
+}) => (
+  <View
+    style={{
+      ...cardStyle,
+      alignItems: 'center',
+      justifyContent: 'flex-start',
+      width: '100%',
+      flex: 1,
+    }}
+  >
+    <View
+      style={{
+        flexDirection: 'row',
+        alignItems: 'center',
+        position: 'absolute',
+        top: 70,
+        left: 25,
+        zIndex: 3,
+      }}
+    >
+      <TouchableOpacity onPress={onClose}>
+        <AntIcon
+          name="arrowleft"
+          size={30}
+        />
+      </TouchableOpacity>
+      {title && (
+        <Typography
+          variant="title"
+          style={{ marginLeft: 10 }}
+        >
+          {title}
+        </Typography>
+      )}
+    </View>
+
+    <View
+      style={{
+        paddingTop: 110,
+        width: '100%',
+        height: '100%',
+      }}
+    >
+      {children}
+    </View>
+  </View>
+);
+
+const RegularModal: React.FC<RegularModalProps> = ({ onClose, children }) => (
+  <Card
+    style={{
+      alignItems: 'center',
+      justifyContent: 'center',
+      zIndex: 2,
+      width: 'auto',
+    }}
+  >
+    <TouchableOpacity
+      onPress={onClose}
+      style={{
+        position: 'absolute',
+        top: 15,
+        right: 15,
+        zIndex: 3,
+      }}
+    >
+      <AntIcon
+        name="closecircleo"
+        size={30}
+      />
+    </TouchableOpacity>
+
+    <View
+      style={{
+        paddingTop: 45,
+      }}
+    >
+      {children}
+    </View>
+  </Card>
+);
 
 export const Modal: React.FC<ModalProps> = ({
   open,
@@ -42,7 +138,7 @@ export const Modal: React.FC<ModalProps> = ({
       visible={open}
       onRequestClose={onClose}
     >
-      {open ? (
+      {open && (
         <View
           style={{
             flex: 1,
@@ -66,89 +162,17 @@ export const Modal: React.FC<ModalProps> = ({
           )}
 
           {fullScreen ? (
-            <View
-              style={{
-                ...cardStyle,
-                alignItems: 'center',
-                justifyContent: 'flex-start',
-                width: '100%',
-                flex: 1,
-              }}
+            <FullScreenModal
+              onClose={onClose}
+              title={title}
             >
-              <View
-                style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  position: 'absolute',
-                  top: 70,
-                  left: 25,
-                  zIndex: 3,
-                }}
-              >
-                <TouchableOpacity onPress={onClose}>
-                  <AntIcon
-                    name="arrowleft"
-                    size={30}
-                  />
-                </TouchableOpacity>
-                {title && (
-                  <Typography
-                    variant="title"
-                    style={{ marginLeft: 10 }}
-                  >
-                    {title}
-                  </Typography>
-                )}
-              </View>
-
-              <View
-                style={{
-                  paddingTop: 110,
-                  width: '100%',
-                  height: '100%',
-                }}
-              >
-                {children}
-              </View>
-            </View>
+              {children}
+            </FullScreenModal>
           ) : (
-            <Card
-              style={{
-                alignItems: 'center',
-                justifyContent: 'center',
-                zIndex: 2,
-                width: 'auto',
-              }}
-            >
-              <TouchableOpacity
-                onPress={onClose}
-                style={{
-                  position: 'absolute',
-                  top: 15,
-                  right: 15,
-                  zIndex: 3,
-                }}
-              >
-                <AntIcon
-                  name="closecircleo"
-                  size={30}
-                />
-              </TouchableOpacity>
-
-              <View
-                style={{
-                  paddingTop: 45,
-                  borderStyle: 'solid',
-                  borderColor: 'black',
-                  borderWidth: 2,
-                }}
-              >
-                {children}
-              </View>
-            </Card>
+            <RegularModal onClose={onClose}>{children}</RegularModal>
           )}
         </View>
-      ) : null}
+      )}
     </RNModal>
   );
 };

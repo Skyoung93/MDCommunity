@@ -5,9 +5,10 @@ import {
   useMemo,
   useState,
 } from 'react';
-import { UpdateCommentNumHugService } from 'services/updateCommentNumHugService';
-import { UpdatePostNumHugService } from 'services/updatePostNumHugService';
-import { Comment } from 'types/comment';
+import { AddCommentToCommentService } from 'services/comments/addCommentToCommentService';
+import { AddCommentToPostService } from 'services/comments/addCommentToPostService';
+import { UpdateCommentNumHugService } from 'services/posts/updateCommentNumHugService';
+import { UpdatePostNumHugService } from 'services/posts/updatePostNumHugService';
 import { Post, PostMetaData } from 'types/post';
 import StatusCode from 'types/statusCodes';
 
@@ -27,6 +28,17 @@ type CommunityDataContextType = {
     index: number,
     commentID: number,
     userHugged: boolean
+  ) => Promise<Post | StatusCode.FAIL>;
+  addCommentToCommentFn: (
+    index: number,
+    commentID: number,
+    message: string,
+    display_name: string
+  ) => Promise<Post | StatusCode.FAIL>;
+  addCommentToPostFn: (
+    index: number,
+    message: string,
+    display_name: string
   ) => Promise<Post | StatusCode.FAIL>;
 };
 
@@ -51,6 +63,14 @@ const CommunityDataContext = createContext<CommunityDataContextType>({
     commentID: number,
     userHugged: boolean
   ) => undefined,
+  addCommentToCommentFn: (
+    index: number,
+    commentID: number,
+    message: string,
+    display_name: string
+  ) => undefined,
+  addCommentToPostFn: (index: number, message: string, display_name: string) =>
+    undefined,
 });
 
 export const CommunityDataProvider = ({
@@ -119,6 +139,44 @@ export const CommunityDataProvider = ({
     [posts]
   );
 
+  const addCommentToCommentFn = useCallback(
+    async (
+      index: number,
+      commentID: number,
+      message: string,
+      display_name: string
+    ) => {
+      const response = await AddCommentToCommentService({
+        index,
+        commentID,
+        posts,
+        message,
+        display_name,
+      });
+      if (response !== StatusCode.FAIL) {
+        updatePostInState(index, response);
+      }
+      return response;
+    },
+    [posts]
+  );
+
+  const addCommentToPostFn = useCallback(
+    async (index: number, message: string, display_name: string) => {
+      const response = await AddCommentToPostService({
+        index,
+        message,
+        display_name,
+        posts,
+      });
+      if (response !== StatusCode.FAIL) {
+        updatePostInState(index, response);
+      }
+      return response;
+    },
+    [posts]
+  );
+
   const value: CommunityDataContextType = useMemo(
     () => ({
       metaData,
@@ -133,6 +191,9 @@ export const CommunityDataProvider = ({
 
       updatePostNumHugFn,
       updateCommentNumHugFn,
+
+      addCommentToCommentFn,
+      addCommentToPostFn,
     }),
     [
       metaData,
@@ -145,6 +206,9 @@ export const CommunityDataProvider = ({
 
       updatePostNumHugFn,
       updateCommentNumHugFn,
+
+      addCommentToCommentFn,
+      addCommentToPostFn,
     ]
   );
 
