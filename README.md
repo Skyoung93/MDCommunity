@@ -70,7 +70,7 @@ Takehome Task for MDandMe
 
 - [ ] Add more variants & UI/UX functionality to the different core components
 
-# Comments & Notes
+## Notes regarding development
 
 ### Front End Framework Philosophy
 
@@ -99,3 +99,5 @@ In an effort to emulate a logged in user, I assume that there is a table in the 
     'userHugged': boolean
 
 entry to each post and comment to emulate that. This way the record of whether you've hugged the post/comment will persist after a reload.
+
+I also added a small delay function to the API calls to simulate a real network, since the json-server is near instant and is something that would def be removed in any other context.
