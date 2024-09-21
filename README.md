@@ -35,14 +35,14 @@ Takehome Task for MDandMe
 - [x] Infinite Scroll
 
   - Uses debounce to prevent excessive function calls from holding at bottom of page
-  - Scrolls the screen upon successful load, as a form of user feedback
+  - Scrolls the screen upon successful load of data as a form of user feedback, both on initial load (30px) and new page load (appr one post's height)
   - If reached end of list, the app will reflect that info to the user accordingly
 
 - [x] Hugs
 
   - User can show support by hugging a post or a comment respectively
   - App tracks history of whether this "logged in" user has like a specific post or not
-  - Should reflect more of a real app experience, since an anonymous person shouldn't be able to add 10000+ hugs to a single post
+  - Should reflect more of a real app experience, since an anonymous person shouldn't be able to add any hugs, let alone 10000+ hugs to a single post/comment
 
 - [x] Post Display
 
@@ -65,6 +65,10 @@ Takehome Task for MDandMe
 - [x] Managed 'Logged In' User
   - Settings Icon at the top of Community page opens a modal that allows the user to edit their display_name that will be inserted when a submits a comment
   - Username persists on reload
+
+## Future Scope?
+
+- [ ] Add more variants & UI/UX functionality to the different core components
 
 # Comments & Notes
 
