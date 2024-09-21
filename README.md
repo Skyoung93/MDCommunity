@@ -30,6 +30,42 @@ Takehome Task for MDandMe
    i
    ```
 
+# Functionality Checklist
+
+- [x] Infinite Scroll
+
+  - Uses debounce to prevent excessive function calls from holding at bottom of page
+  - Scrolls the screen upon successful load, as a form of user feedback
+  - If reached end of list, the app will reflect that info to the user accordingly
+
+- [x] Hugs
+
+  - User can show support by hugging a post or a comment respectively
+  - App tracks history of whether this "logged in" user has like a specific post or not
+  - Should reflect more of a real app experience, since an anonymous person shouldn't be able to add 10000+ hugs to a single post
+
+- [x] Post Display
+
+  - Two views: List Entry vs Full Screen
+  - List Entry allows for multiple post to be viewed, although only the title and a truncated summary are available
+  - Full Screen allows the user to fully view the post and see more details of the summary and chatbot assessment
+  - In full screen mode, there is an ability to grow/shrink the description and Assessment both on the top and bottom of the text. I figured that since these can be extremely long paragraphs, there should be more locations to help hide text that you are done looking at.
+
+- [x] Comment Display
+
+  - Both the List Entry and Full Screen have easy access to the Comments, both at the bottom of the Post
+  - User has ability to reply to a specific comment or post and it will be added to the DB accordingly and reflect upon reload
+
+- [x] Draft Comment Prior to Submission
+
+  - When drafting a comment, opens as a modal to maximize the screen real estate to help focus
+  - User gets a small summary of what the post/comment entailed at the top
+  - User gets a text input box that grows and shrinks relative the the internal text and the touch screen keyboard
+
+- [x] Managed 'Logged In' User
+  - Settings Icon at the top of Community page opens a modal that allows the user to edit their display_name that will be inserted when a submits a comment
+  - Username persists on reload
+
 # Comments & Notes
 
 ### Front End Framework Philosophy

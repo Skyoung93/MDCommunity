@@ -22,6 +22,10 @@ export const Settings: React.FC<SettingProps> = ({ onClose }) => {
   }, [name]);
 
   const handleSavingSettings = async () => {
+    if (displayName === '') {
+      setDisplayName(name);
+      return;
+    }
     const response = await updateUserName(displayName);
     if (response === StatusCode.SUCCESS) {
       onClose();
