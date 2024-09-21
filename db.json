@@ -4,7 +4,7 @@
       "post_url": "37F+Experiencing+a+range+of+symptoms+including+nausea+and+frequent+urination-00001685",
       "title": "[37F] Experiencing a range of symptoms including nausea and frequent urination",
       "created_at": "2024-03-04T22:05:16.998787",
-      "num_hugs": 1,
+      "num_hugs": 2,
       "patient_description": "A 37-year-old female presents with a constellation of symptoms including fatigue, frequent urination, irritability, mood swings, food aversions, cravings, nausea, back pain, bloating, temperature sensitivity, and episodes of crying. The nausea is described as frequent, occurring regardless of food intake, and has been persistent for a couple of weeks, with a severity rating of 3 out of 10. The patient notes that the nausea does not seem to be triggered or alleviated by specific activities or situations. Additionally, the patient reports frequent urination that has also been occurring for a few weeks, but with no change in volume compared to usual. The patient denies the presence of fever or chills. There is also a mention of unprotected sexual activity, but no new sexual partners. No other medical conditions or symptoms were disclosed during the conversation.",
       "assessment": "### What might be happening\n\nBased on the information you've provided, a few possibilities could explain your symptoms:\n\n- Pregnancy: Your symptoms such as fatigue, mood swings, aversion to some foods, cravings, nausea, back pain, bloating, and frequent urination are common early signs of pregnancy. Given that you've mentioned unprotected sexual activity, this could be a possibility.\n  - Pregnancy can be confirmed with a home pregnancy test or a blood test at a doctor's office.\n\n- Premenstrual Syndrome (PMS): Some of your symptoms like mood swings, food cravings, bloating, and fatigue can occur due to hormonal changes in the days leading up to your period.\n  - Treatment usually involves lifestyle changes like regular exercise, a balanced diet, and adequate sleep. Over-the-counter pain relievers can help with physical symptoms.\n\n- Urinary Tract Infection (UTI): Frequent urination and back pain can be symptoms of a UTI.\n  - UTIs are typically treated with antibiotics prescribed by a doctor.\n\n### What you can do\n\n1. Consider taking a home pregnancy test if you suspect you might be pregnant. These tests are usually accurate about a week after your missed period.\n2. Try to maintain a healthy lifestyle with regular exercise, a balanced diet, and adequate sleep. This can help manage symptoms of PMS.\n3. Drink plenty of water to help flush out your urinary tract if you suspect a UTI. However, you should still see a doctor for a proper diagnosis and treatment.\n4. Consult a healthcare professional to discuss your symptoms and get a proper diagnosis.\n\n### What you should look out for\n\nSeek immediate medical attention if:\n\n- Your symptoms worsen or persist for a prolonged period.\n- You have severe abdominal or back pain.\n- You notice blood in your urine.\n- You have a high fever, severe headache, chest pain, or other worrying symptoms.\n\nPlease remember that while I strive to provide accurate information, I'm an AI and not a substitute for professional medical advice. Always consult a healthcare professional for a formal diagnosis.",
       "question": "",
@@ -49,22 +49,31 @@
           "text": "I can confirm, PT works wonders if you stick with it",
           "created_at": "2024-03-15T19:44:05.153259",
           "num_hugs": 1
+        },
+        "6": {
+          "id": 6,
+          "parent_id": null,
+          "display_name": "",
+          "text": "Weird…",
+          "created_at": "2024-09-21T10:33:56.169Z",
+          "num_hugs": 1,
+          "userHugged": true
         }
       },
       "id": "eaa5",
-      "userHugged": false
+      "userHugged": true
     },
     {
       "post_url": "20F+Experiencing+chest+pain+difficulty+breathing+and+vomiting-00001684",
       "title": "[20F] Experiencing chest pain, difficulty breathing, and vomiting",
       "created_at": "2024-03-04T21:57:52.949755",
-      "num_hugs": 1,
+      "num_hugs": 2,
       "patient_description": "A 20-year-old female is reporting severe chest pain described as a tight squeezing sensation around the sternum and upper left back, moderate to severe difficulty breathing, and persistent vomiting for the last two days. The patient also describes a constant, throbbing headache with an intensity of 4 out of 10, located behind the eyes and occurring daily. The patient has a medical history significant for pulmonary embolisms and deep vein thrombosis but is not currently on any preventative treatment. Additionally, the patient reports feeling clammy and has cold extremities, with no recent travel, immobilization, or use of estrogen-containing contraceptives. No new leg swelling or discoloration has been noted. The patient's symptoms are concerning and could suggest a serious condition such as a recurrent pulmonary embolism or another cardiac or respiratory issue. Immediate medical evaluation is strongly recommended.",
       "assessment": "### What might be happening\n\nBased on the information you've provided, you're experiencing several symptoms that could indicate a serious condition. Given your history of pulmonary embolisms and deep vein thrombosis, your current symptoms of chest pain, difficulty breathing, and vomiting could potentially indicate another pulmonary embolism. This is a condition where one or more arteries in your lungs become blocked by a blood clot. This is a serious condition that can damage your lungs and other organs in your body due to reduced oxygen flow.\n\n### What you can do\n\nGiven the severity of your symptoms and your medical history, it's important to seek immediate medical attention. Please go to the nearest emergency room or call an ambulance. Do not attempt to drive yourself.\n\n### What you should look out for\n\nIf your symptoms worsen or if you experience any of the following, it's crucial to seek immediate medical attention:\n\n- Increased difficulty breathing\n- Severe chest pain\n- Coughing up blood\n- A sudden onset of sharp, severe pain in your leg\n- Swelling, redness, or warmth in your leg\n\nRemember, this advice is intended to be general in nature, and specific causes may not apply to your situation. Always consult with a healthcare provider for appropriate examination, testing, and care recommendations.",
       "question": "",
       "comments": {},
       "id": "8d36",
-      "userHugged": false
+      "userHugged": true
     },
     {
       "post_url": "21F+With+enlarged+cervical+lymph+nodes+and+associated+symptoms-00001683",
@@ -705,5 +714,8 @@
       "comments": {},
       "id": "045e"
     }
-  ]
+  ],
+  "user": {
+    "name": "John Doe"
+  }
 }

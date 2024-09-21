@@ -37,8 +37,6 @@ export const AddCommentToPostService = async ({
     },
   };
 
-  console.log(JSON.stringify(updatedPost, null, 2));
-
   const response = await UpdatePostAPI({ updatedPost });
 
   if (response !== StatusCode.FAIL) {

@@ -243,7 +243,7 @@ export const CommunityPage = (): React.ReactNode => {
         onClose={() => setShowSettingModal(false)}
         title="User Settings"
       >
-        <Settings />
+        <Settings onClose={() => setShowSettingModal(false)} />
       </Modal>
     </View>
   );

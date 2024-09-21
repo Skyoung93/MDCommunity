@@ -6,7 +6,7 @@ import { User } from 'types/user';
 
 type UserDataContextType = {
   name: string;
-  updateUserName: (newName: string) => void;
+  updateUserName: (newName: string) => Promise<StatusCode>;
 };
 
 const UserDataContext = createContext<UserDataContextType>({
@@ -39,6 +39,7 @@ export const UserDataProvider = ({
     if (response !== StatusCode.FAIL) {
       setName(newName);
     }
+    return response;
   };
 
   const values: UserDataContextType = useMemo(

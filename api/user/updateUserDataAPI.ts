@@ -17,8 +17,6 @@ export const UpdateUserDataAPI = async ({
     });
 
     if (response.ok === true) {
-      const postResponse = await response.json();
-
       return StatusCode.SUCCESS;
     } else {
       return StatusCode.FAIL;

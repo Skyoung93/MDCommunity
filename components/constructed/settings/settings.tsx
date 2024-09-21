@@ -5,8 +5,13 @@ import { useEffect, useState } from 'react';
 import { Dimensions, KeyboardAvoidingView, View, Platform } from 'react-native';
 import { useUserContext } from 'state/userContext';
 import FAIcon from 'react-native-vector-icons/FontAwesome';
+import StatusCode from 'types/statusCodes';
 
-export const Settings: React.FC = () => {
+type SettingProps = {
+  onClose: () => void;
+};
+
+export const Settings: React.FC<SettingProps> = ({ onClose }) => {
   const { name, updateUserName } = useUserContext();
   const [displayName, setDisplayName] = useState<string>('');
 
@@ -15,6 +20,13 @@ export const Settings: React.FC = () => {
       setDisplayName(name);
     }
   }, [name]);
+
+  const handleSavingSettings = async () => {
+    const response = await updateUserName(displayName);
+    if (response === StatusCode.SUCCESS) {
+      onClose();
+    }
+  };
 
   return (
     <KeyboardAvoidingView
@@ -49,7 +61,7 @@ export const Settings: React.FC = () => {
                 color="white"
               />
             }
-            onClick={() => updateUserName(displayName)}
+            onClick={handleSavingSettings}
           >
             Save
           </Button>
