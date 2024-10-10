@@ -2,9 +2,9 @@ import React from 'react';
 import { StyleSheet, Text, TextStyle, View, ViewStyle } from 'react-native';
 
 type BadgeProps = {
-  size?: 'default' | 'small' | 'medium' | 'large';
-  variant?: 'default' | 'error' | 'warning' | 'success' | 'active';
-  children: React.ReactNode;
+  size?: 'default' | 'small' | 'medium' | 'large' | 'navigation';
+  color?: 'default' | 'red' | 'green';
+  children?: React.ReactNode;
   style?: ViewStyle; // Custom container style
   textStyle?: TextStyle; // Custom text style
   leftIcon?: React.ReactNode;
@@ -12,56 +12,73 @@ type BadgeProps = {
 };
 
 const badgeSizeStyles = StyleSheet.create({
-  base: {
+  default: {
     borderRadius: 15,
-    alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: { width: 4, height: 4 },
-    shadowOpacity: 0.3,
-    shadowRadius: 10,
-    elevation: 5, // Android specific shadow
+    paddingHorizontal: 16,
+    paddingVertical: 10,
+
+    shadowColor: '#000000',
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0.1,
+    shadowRadius: 5,
+    elevation: 5,
+
     flexDirection: 'row',
     justifyContent: 'space-between',
+    alignItems: 'center',
     gap: 8,
   },
-  default: {
-    paddingVertical: 8,
-    paddingHorizontal: 12,
-    borderColor: '#A0A0A0',
+  navigation: {
+    borderRadius: 15,
+    padding: 20,
+
+    justifyContent: 'space-between',
+    alignItems: 'center',
+
     borderWidth: 2,
+    borderColor: 'black',
     borderStyle: 'solid',
-  },
-  small: {
-    paddingVertical: 2,
-    paddingHorizontal: 5,
-  },
-  medium: {
-    paddingVertical: 6,
-    paddingHorizontal: 10,
-  },
-  large: {
-    paddingVertical: 10,
-    paddingHorizontal: 14,
   },
 });
 const badgeSize = {
   default: badgeSizeStyles.default,
-  small: badgeSizeStyles.small,
-  medium: badgeSizeStyles.medium,
-  large: badgeSizeStyles.large,
+  navigation: badgeSizeStyles.navigation,
+};
+
+const badgeColorStyles = StyleSheet.create({
+  default: {
+    backgroundColor: 'transparent',
+  },
+  red: {
+    backgroundColor: '#FFF2F6',
+  },
+  green: {
+    backgroundColor: '#E2F9FB',
+  },
+});
+const badgeColor = {
+  default: badgeColorStyles.default,
+  red: badgeColorStyles.red,
+  green: badgeColorStyles.green,
 };
 const textSizeStyles = StyleSheet.create({
+  base: {
+    fontWeight: 600,
+  },
   default: {
     fontSize: 16,
   },
   small: {
-    fontSize: 12,
+    fontSize: 16,
   },
   medium: {
-    fontSize: 18,
+    fontSize: 20,
   },
   large: {
-    fontSize: 20,
+    fontSize: 24,
+  },
+  navigation: {
+    fontSize: 28,
   },
 });
 const textSize = {
@@ -69,86 +86,55 @@ const textSize = {
   small: textSizeStyles.small,
   medium: textSizeStyles.medium,
   large: textSizeStyles.large,
+  navigation: textSizeStyles.navigation,
 };
-
-const badgeVariantStyles = StyleSheet.create({
+const textColorStyles = StyleSheet.create({
   default: {
-    backgroundColor: 'transparent',
+    color: '#000000',
   },
-  error: {
-    backgroundColor: '#d92727',
+  red: {
+    color: '#E76C9C',
   },
-  warning: {
-    backgroundColor: '#e0e32d',
-  },
-  success: {
-    backgroundColor: '#27e65a',
-  },
-  active: {
-    backgroundColor: '#cf404a',
+  green: {
+    color: '#67a8af',
   },
 });
-const badgeVariant = {
-  default: badgeVariantStyles.default,
-  error: badgeVariantStyles.error,
-  warning: badgeVariantStyles.warning,
-  success: badgeVariantStyles.success,
-  active: badgeVariantStyles.active,
-};
-const textVariantStyles = StyleSheet.create({
-  base: {
-    fontWeight: 'bold',
-  },
-  light: {
-    color: '#edebeb',
-  },
-  dark: {
-    color: '#2b2b2b',
-  },
-});
-const textVariant = {
-  default: textVariantStyles.dark,
-  error: textVariantStyles.light,
-  warning: textVariantStyles.dark,
-  success: textVariantStyles.dark,
-  active: textVariantStyles.light,
+const textColor = {
+  default: textColorStyles.default,
+  red: textColorStyles.red,
+  green: textColorStyles.green,
 };
 
 export const Badge: React.FC<BadgeProps> = ({
   size = 'default',
-  variant = 'default',
+  color = 'default',
   children,
   style,
   textStyle,
   leftIcon,
   rightIcon,
 }) => {
-  const selectedbadgeSize = badgeSize[size] || badgeSize.default;
+  const selectedBadgeSize = badgeSize[size] || badgeSizeStyles.default;
+  const selectedBadgeColor = badgeColor[color] || badgeColor.default;
+
   const selectedTextSize = textSize[size] || textSize.default;
-  const selectedbadgeVariant = badgeVariant[variant] || badgeVariant.default;
-  const selectedTextVariant = textVariant[variant] || textVariant.default;
+  const selectedTextColor = textColor[color] || textColor.default;
 
   return (
-    <View
-      style={[
-        badgeSizeStyles.base,
-        selectedbadgeSize,
-        selectedbadgeVariant,
-        style,
-      ]}
-    >
+    <View style={[selectedBadgeSize, selectedBadgeColor, style]}>
       {leftIcon ? <View>{leftIcon}</View> : null}
-
-      <Text
-        style={[
-          textVariantStyles.base,
-          selectedTextSize,
-          selectedTextVariant,
-          textStyle,
-        ]}
-      >
-        {children}
-      </Text>
+      {children ? (
+        <Text
+          style={[
+            textSizeStyles.base,
+            selectedTextSize,
+            selectedTextColor,
+            textStyle,
+          ]}
+        >
+          {children}
+        </Text>
+      ) : null}
       {rightIcon ? <View>{rightIcon}</View> : null}
     </View>
   );

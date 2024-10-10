@@ -20,7 +20,7 @@ export function convertToHexCode(str: string): {
   const brightness = (r * 299 + g * 587 + b * 114) / 1000;
 
   // Determine text color based on brightness
-  const textColor = brightness > 128 ? '#000000' : '#FFFFFF';
+  const textColor = brightness > 128 ? '#6F6F6F' : '#F5F6FA';
 
   return { backgroundColor, textColor };
 }

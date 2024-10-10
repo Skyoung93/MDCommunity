@@ -39,7 +39,7 @@ export const PostEntry = ({
     <Card>
       <TouchableOpacity
         style={{
-          gap: 5,
+          gap: 3,
         }}
         onPress={() => {
           onCardClick(index);
@@ -50,11 +50,12 @@ export const PostEntry = ({
           style={{
             maxHeight: 100,
             overflow: 'hidden',
-            paddingHorizontal: 10,
+            backgroundColor: '#FFFFFF',
+            padding: 20,
           }}
         >
           <Typography
-            variant="title"
+            size="title"
             numberOfLines={2}
           >
             {post.title}
@@ -62,12 +63,9 @@ export const PostEntry = ({
         </View>
         <View
           style={{
-            borderStyle: 'solid',
-            borderWidth: 2,
-            borderColor: 'black',
-            borderRadius: 15,
-            padding: 10,
+            padding: 20,
             overflow: 'hidden',
+            backgroundColor: '#FFFFFF',
           }}
         >
           <Typography
@@ -78,7 +76,7 @@ export const PostEntry = ({
             Patient Description:
           </Typography>
           <Typography
-            variant="default"
+            size="default"
             numberOfLines={3}
           >
             {post.patient_description}
@@ -88,7 +86,9 @@ export const PostEntry = ({
           style={{
             flexDirection: 'row',
             justifyContent: 'space-between',
-            paddingHorizontal: 10,
+            padding: 10,
+
+            backgroundColor: '#FFFFFF',
           }}
         >
           <View
@@ -100,15 +100,14 @@ export const PostEntry = ({
             }}
           >
             <Button
-              variant={userHugged ? 'active' : null}
+              color={userHugged ? 'red' : null}
               leftIcon={
                 <AntIcon
                   name="hearto"
-                  color={userHugged ? '#edebeb' : '#2b2b2b'}
+                  color={userHugged ? 'red' : '#2b2b2b'}
                 />
               }
               onClick={clickHug}
-              style={{ justifyContent: 'center' }}
             >
               {`${post.num_hugs > 0 ? post.num_hugs : 0}`}
             </Button>
@@ -147,10 +146,11 @@ export const PostEntry = ({
             style={{
               justifyContent: 'center',
               alignItems: 'center',
+              flexGrow: 1,
             }}
           >
             <Typography
-              variant="small"
+              size="small"
               style={{ color: '#2b2b2b', fontWeight: 'bold' }}
             >
               {formatDistanceToNow(post.created_at, { addSuffix: true })}
@@ -161,29 +161,16 @@ export const PostEntry = ({
       {showComments ? (
         <View
           style={{
-            paddingTop: 20,
-            alignItems: 'center',
+            gap: 20,
+            padding: 20,
+            width: '100%',
+            backgroundColor: '#FFFFFF',
           }}
         >
-          <View
-            style={{
-              width: '75%',
-              backgroundColor: '#A0A0A0',
-              height: 3,
-            }}
+          <CommentsCard
+            commentsDict={comments}
+            selectedPostIndex={index}
           />
-          <View
-            style={{
-              gap: 20,
-              padding: 20,
-              width: '100%',
-            }}
-          >
-            <CommentsCard
-              commentsDict={comments}
-              selectedPostIndex={index}
-            />
-          </View>
         </View>
       ) : null}
     </Card>

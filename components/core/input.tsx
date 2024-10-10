@@ -12,53 +12,89 @@ export type InputProps = {
   onChange: (text: string) => void;
   placeholder?: string;
   size?: 'default' | 'small' | 'medium' | 'large';
-  variant?: 'default' | 'error' | 'warning' | 'success';
+  color?: 'default' | 'light' | 'dark' | 'lighter' | 'darker';
   style?: ViewStyle; // Custom container style
   inputStyle?: TextStyle; // Custom input text style
   multiline?: boolean;
+  useFlex?: boolean;
 };
 
-const inputVariantStyles = StyleSheet.create({
-  default: {
-    borderColor: '#ccc',
-    backgroundColor: '#fff',
+const sizeStyles = StyleSheet.create({
+  large: {
+    fontSize: 20,
   },
-  error: {
-    borderColor: '#d92727',
-    backgroundColor: '#ffe5e5',
+  medium: {
+    fontSize: 16,
+    fontWeight: 500,
   },
-  warning: {
-    borderColor: '#e0e32d',
-    backgroundColor: '#fffbe5',
-  },
-  success: {
-    borderColor: '#27e65a',
-    backgroundColor: '#e5ffe5',
+  small: {
+    fontSize: 12,
+    fontWeight: 600,
   },
 });
-
-const inputVariant = {
-  default: inputVariantStyles.default,
-  error: inputVariantStyles.error,
-  warning: inputVariantStyles.warning,
-  success: inputVariantStyles.success,
+const sizeMapping = {
+  default: sizeStyles.medium,
+  small: sizeStyles.small,
+  medium: sizeStyles.medium,
+  large: sizeStyles.large,
+};
+const colorStyles = StyleSheet.create({
+  borderless: {
+    borderColor: 'transparent',
+  },
+  lighter: {
+    color: '#F5F6FA',
+    borderColor: '#F5F6FA',
+  },
+  light: {
+    color: '#A8A8A8',
+    borderColor: '#A8A8A8',
+  },
+  dark: {
+    color: '#6F6F6F',
+    borderColor: '#6F6F6F',
+  },
+  darker: {
+    color: '#000000',
+    borderColor: '#000000',
+  },
+});
+const colorMapping = {
+  light: colorStyles.light,
+  lighter: colorStyles.lighter,
+  dark: colorStyles.dark,
+  default: colorStyles.borderless,
 };
 
 const Input = ({
   value,
   onChange,
   placeholder = '',
-  variant = 'default',
+  color = 'default',
+  size = 'default',
   style,
   inputStyle,
   multiline,
+  useFlex = false,
 }: InputProps) => {
-  const selectedInputVariant = inputVariant[variant] || inputVariant.default;
+  const sizeClass = sizeMapping[size];
+  const colorClass = colorMapping[color];
+  const flexClass = useFlex ? { flexGrow: 1, flex: 1 } : {};
 
   return (
-    <View style={style}>
+    <View style={[{ minHeight: 32, minWidth: 100 }, flexClass, style]}>
       <TextInput
-        style={[styles.input, selectedInputVariant, inputStyle]}
+        style={[
+          {
+            borderWidth: 1,
+            borderRadius: 8,
+            paddingHorizontal: 15,
+            paddingBottom: 5,
+          },
+          sizeClass,
+          colorClass,
+          inputStyle,
+        ]}
         value={value}
         onChangeText={onChange}
         placeholder={placeholder}
@@ -70,14 +106,5 @@ const Input = ({
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  input: {
-    borderWidth: 1,
-    borderRadius: 8,
-    paddingHorizontal: 15,
-    fontSize: 16,
-  },
-});
 
 export default Input;

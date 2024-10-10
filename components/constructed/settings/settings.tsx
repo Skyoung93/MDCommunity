@@ -37,32 +37,48 @@ export const Settings: React.FC<SettingProps> = ({ onClose }) => {
       style={{
         width: Dimensions.get('window').width * 0.9,
         padding: 20,
-        paddingTop: 0,
+        backgroundColor: 'white',
       }}
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       keyboardVerticalOffset={Platform.OS === 'ios' ? 100 : 0} // Adjust based on your header height
     >
-      <View style={{ width: '100%', gap: 10 }}>
-        <Typography variant="title">Settings</Typography>
-        <View style={{ gap: 5 }}>
-          <Typography style={{ paddingLeft: 10 }}>User Name</Typography>
+      <View
+        style={{
+          width: '100%',
+          gap: 25,
+        }}
+      >
+        <Typography size="pageTitle">Settings</Typography>
+        <View
+          style={{
+            gap: 10,
+            overflow: 'hidden',
+            flexGrow: 1,
+          }}
+        >
+          <Typography
+            size="title"
+            style={{
+              paddingLeft: 10,
+            }}
+          >
+            User Name
+          </Typography>
           <Input
+            color="dark"
+            size="medium"
             value={displayName}
             onChange={setDisplayName}
-            style={{
-              height: 40,
-            }}
-            inputStyle={{ height: 40, fontSize: 20 }}
           />
         </View>
         <View style={{ width: '100%', alignItems: 'center' }}>
           <Button
-            variant="error"
+            color="green"
             leftIcon={
               <FAIcon
                 name="save"
                 size={20}
-                color="white"
+                color="green"
               />
             }
             onClick={handleSavingSettings}

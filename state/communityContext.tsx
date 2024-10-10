@@ -219,6 +219,6 @@ export const CommunityDataProvider = ({
   );
 };
 
-export function useDatastoreContext(): CommunityDataContextType {
+export function useCommunityContext(): CommunityDataContextType {
   return useContext(CommunityDataContext);
 }

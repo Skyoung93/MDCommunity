@@ -6,7 +6,7 @@ import { View } from 'react-native';
 import { Comment, FocusedEntryType } from 'types/comment';
 import AntIcon from 'react-native-vector-icons/AntDesign';
 import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { useDatastoreContext } from 'state/communityContext';
+import { useCommunityContext } from 'state/communityContext';
 import StatusCode from 'types/statusCodes';
 import { Badge } from 'components/core/badge';
 import { convertToHexCode } from 'utils/convertToHexCode';
@@ -43,7 +43,7 @@ const CommentEntryUI: React.FC<CommentEntryUIProps> = ({
   setFocusedEntry,
 }) => {
   const { display_name, text, created_at, userHugged, num_hugs } = comment;
-  const { updateCommentNumHugFn } = useDatastoreContext();
+  const { updateCommentNumHugFn } = useCommunityContext();
 
   const clickHug = async () => {
     const response = await updateCommentNumHugFn(
@@ -85,18 +85,18 @@ const CommentEntryUI: React.FC<CommentEntryUIProps> = ({
             style={{ backgroundColor }}
           >
             <Typography
-              variant="default"
+              size="default"
               style={{ fontWeight: 'bold', color: textColor }}
             >
               {display_name}
             </Typography>
           </Badge>
-          <Typography variant="small">
+          <Typography size="small">
             {formatDistanceToNow(created_at, { addSuffix: true })}
           </Typography>
         </View>
         <View style={{ padding: 10, flex: 1 }}>
-          <Typography variant="default">{text}</Typography>
+          <Typography size="default">{text}</Typography>
         </View>
         <View
           style={{
@@ -108,11 +108,11 @@ const CommentEntryUI: React.FC<CommentEntryUIProps> = ({
           }}
         >
           <Button
-            variant={userHugged ? 'active' : null}
+            color={userHugged ? 'red' : null}
             leftIcon={
               <AntIcon
                 name="hearto"
-                color={userHugged ? '#edebeb' : '#2b2b2b'}
+                color={userHugged ? 'red' : '#2b2b2b'}
               />
             }
             onClick={clickHug}
@@ -178,7 +178,7 @@ const CommentEntryUI: React.FC<CommentEntryUIProps> = ({
                 }
                 onClick={increaseRunningDepthThreshold}
               >
-                <Typography variant="medium">Show More</Typography>
+                <Typography size="medium">Show More</Typography>
               </Button>
             </View>
           )}

@@ -18,13 +18,6 @@ import { Post } from 'types/post';
 const iconScale = 1.75;
 
 type PostDataCardProps = {
-  // title: string;
-  // patient_description: string;
-  // assessment: string;
-  // created_at: string;
-  // num_hugs: number;
-  // commentCount: number;
-  // userHugged: boolean;
   post: Post;
   selectedPostIndex: number;
   handleHugClick: (index: number, userHugged: boolean) => void;
@@ -56,13 +49,11 @@ export const PostDataCard: React.FC<PostDataCardProps> = ({
   const [isAssessmentTruncated, setIsAssessmentTruncated] =
     useState<boolean>(false);
 
-  // Adjust this value based on your line height
   const lineHeight = 27;
   const maxHeight = lineHeight * 4;
 
   useEffect(() => {
-    // Implement your logic to determine if truncation is needed
-    setIsAssessmentTruncated(true); // Replace with actual logic if necessary
+    setIsAssessmentTruncated(true);
   }, [assessment]);
 
   const [focusedEntry, setFocusedEntry] = useState<
@@ -71,8 +62,15 @@ export const PostDataCard: React.FC<PostDataCardProps> = ({
   const closeCommentsCard = () => setFocusedEntry(undefined);
 
   return (
-    <Card style={{ gap: 20, padding: 20, width: '100%' }}>
-      <Typography variant="title">{title}</Typography>
+    <Card
+      color="white"
+      style={{
+        gap: 20,
+        padding: 20,
+        width: '100%',
+      }}
+    >
+      <Typography size="title">{title}</Typography>
       <View
         style={{
           gap: 8,
@@ -82,38 +80,40 @@ export const PostDataCard: React.FC<PostDataCardProps> = ({
         <Button
           onClick={toggleShowDescription}
           size="large"
+          color="green"
           leftIcon={
             <AntIcon
               name="profile"
-              style={{ transform: [{ scale: iconScale }] }}
+              style={{
+                transform: [{ scale: iconScale }],
+                color: '#67a8af',
+              }}
             />
           }
-          variant="success"
           rightIcon={
-            showDescription ? (
-              <FAIcon
-                name="chevron-up"
-                style={{ transform: [{ scale: iconScale }] }}
-              />
-            ) : (
-              <FAIcon
-                name="chevron-down"
-                style={{ transform: [{ scale: iconScale }] }}
-              />
-            )
+            <FAIcon
+              name={showDescription ? 'chevron-up' : 'chevron-down'}
+              style={{
+                transform: [{ scale: iconScale }],
+                color: '#67a8af',
+              }}
+            />
           }
         >
           Description
         </Button>
         <Card
           style={{
-            backgroundColor: '#27e65a',
+            backgroundColor: '#E2F9FB',
             gap: 15,
             padding: 15,
             width: '100%',
           }}
         >
-          <Typography numberOfLines={showDescription ? null : 4}>
+          <Typography
+            style={{ color: '#67a8af' }}
+            numberOfLines={showDescription ? null : 4}
+          >
             {patient_description}
           </Typography>
           <TouchableOpacity
@@ -121,7 +121,7 @@ export const PostDataCard: React.FC<PostDataCardProps> = ({
             style={{ width: '100%', alignItems: 'center' }}
           >
             <Typography
-              variant="medium"
+              size="medium"
               style={{ fontWeight: 'bold' }}
             >
               {showDescription ? 'Show Less' : 'Show More'}
@@ -138,32 +138,28 @@ export const PostDataCard: React.FC<PostDataCardProps> = ({
         <Button
           onClick={toggleShowAssessment}
           size="large"
+          color="red"
           leftIcon={
             <IonIcon
-              style={{ transform: [{ scale: iconScale }] }}
+              style={{ transform: [{ scale: iconScale }], color: '#E76C9C' }}
               name="sparkles-sharp"
             />
           }
           rightIcon={
-            showAssessment ? (
-              <FAIcon
-                name="chevron-up"
-                style={{ transform: [{ scale: iconScale }] }}
-              />
-            ) : (
-              <FAIcon
-                name="chevron-down"
-                style={{ transform: [{ scale: iconScale }] }}
-              />
-            )
+            <FAIcon
+              name={showAssessment ? 'chevron-up' : 'chevron-down'}
+              style={{
+                transform: [{ scale: iconScale }],
+                color: '#E76C9C',
+              }}
+            />
           }
-          variant="warning"
         >
           Chatbot Assessment
         </Button>
         <Card
           style={{
-            backgroundColor: '#e0e32d',
+            backgroundColor: '#FFF2F6',
             gap: 15,
             padding: 15,
             width: '100%',
@@ -181,20 +177,20 @@ export const PostDataCard: React.FC<PostDataCardProps> = ({
                 style={{
                   heading3: {
                     fontSize: 20,
-                    color: '#2b2b2b',
+                    color: '#E76C9C',
                     fontWeight: '900',
                     textDecorationLine: 'underline',
                     marginBottom: 6,
                   },
                   paragraph: {
                     fontSize: 18,
-                    color: '#2b2b2b',
+                    color: '#E76C9C',
                     marginBottom: 12,
                   },
                   list_item: {
                     fontSize: 16,
                     fontWeight: 'bold',
-                    color: '#2b2b2b',
+                    color: '#E76C9C',
                     marginBottom: 6,
                   },
                 }}
@@ -211,7 +207,7 @@ export const PostDataCard: React.FC<PostDataCardProps> = ({
             style={{ width: '100%', alignItems: 'center' }}
           >
             <Typography
-              variant="medium"
+              size="medium"
               style={{ fontWeight: 'bold' }}
             >
               {showAssessment ? 'Show Less' : 'Show More'}
@@ -228,7 +224,7 @@ export const PostDataCard: React.FC<PostDataCardProps> = ({
       >
         <View style={{ flexDirection: 'row', gap: 5 }}>
           <Button
-            variant={userHugged ? 'active' : undefined}
+            color={userHugged ? 'red' : undefined}
             leftIcon={
               <AntIcon
                 name="hearto"
@@ -268,7 +264,7 @@ export const PostDataCard: React.FC<PostDataCardProps> = ({
         </View>
         <View style={{ justifyContent: 'center', alignItems: 'center' }}>
           <Typography
-            variant="default"
+            size="default"
             style={{ color: '#2b2b2b', fontWeight: 'bold' }}
           >
             {formatDistanceToNow(created_at, { addSuffix: true })}

@@ -3,28 +3,41 @@ import { Badge } from 'components/core/badge';
 import LoadingComponent from 'components/core/loading';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import {
-  Dimensions,
   NativeScrollEvent,
   NativeSyntheticEvent,
   ScrollView,
-  Text,
   View,
 } from 'react-native';
 import { debounceFn } from 'utils/debounceFn';
-import AntIcon from 'react-native-vector-icons/AntDesign';
 import StatusCode from 'types/statusCodes';
 import { Modal } from 'components/core/modal';
 import { CommunityPostCard } from 'components/constructed/communityPost/communityPostCard';
-import { useDatastoreContext } from 'state/communityContext';
-import { Card } from 'components/core/card';
-import { Typography } from 'components/core/typography';
-import FAIcon from 'react-native-vector-icons/FontAwesome';
+
+import AntIcon from 'react-native-vector-icons/AntDesign';
+import IonIcon from 'react-native-vector-icons/Ionicons';
 
 import { GetPostsService } from 'services/posts/getPostsService';
-import { Button } from 'components/core/button';
-import { Settings } from 'components/constructed/settings/settings';
+import {
+  CommunityDataProvider,
+  useCommunityContext,
+} from 'state/communityContext';
+import { UserDataProvider } from 'state/userContext';
+import { ErrorPage } from './errorPage';
 
 export const CommunityPage = (): React.ReactNode => {
+  return (
+    <UserDataProvider>
+      <CommunityDataProvider>
+        <CommunityPageContent />
+      </CommunityDataProvider>
+    </UserDataProvider>
+  );
+};
+
+const CommunityPageContent = (): React.ReactNode => {
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<boolean>(false);
+
   const {
     metaData,
     setMetaData,
@@ -37,15 +50,13 @@ export const CommunityPage = (): React.ReactNode => {
     selectedPost,
 
     updatePostNumHugFn,
-  } = useDatastoreContext();
+  } = useCommunityContext();
 
   const [showPostModal, setShowPostModal] = useState<boolean>(false);
   const handleClosePostModal = () => {
     setShowPostModal(false);
     setSelectedPostIndex(undefined);
   };
-
-  const [showSettingModal, setShowSettingModal] = useState<boolean>(false);
 
   const scrollPositionRef = useRef<number>(0);
   const scrollViewRef = useRef<ScrollView>(null);
@@ -64,11 +75,12 @@ export const CommunityPage = (): React.ReactNode => {
     const InitialLoad = async () => {
       const initialPosts = await GetPostsService({ page: 1 });
       if (initialPosts !== StatusCode.FAIL) {
-        // If using redux, no need for this logic
         const { metadata, posts } = initialPosts;
         setMetaData(metadata);
         addToPosts(posts, () => scrollingCB(20));
-        // Code would instead be used to handle UI aspects, like loading icons
+        setLoading(false);
+      } else {
+        setError(true);
       }
     };
     InitialLoad().catch((error) => console.log(error));
@@ -81,11 +93,12 @@ export const CommunityPage = (): React.ReactNode => {
 
     const newPosts = await GetPostsService({ page: metaData.next });
     if (newPosts !== StatusCode.FAIL) {
-      // If using redux, no need for this logic
       const { metadata, posts } = newPosts;
       setMetaData(metadata);
       addToPosts(posts, () => scrollingCB(175));
-      // Code would instead be used to handle UI aspects, like loading icons
+      // Code would instead be used to handle UI feedback
+    } else {
+      setError(true);
     }
   };
 
@@ -124,8 +137,8 @@ export const CommunityPage = (): React.ReactNode => {
     <View
       style={{
         flex: 1,
-        paddingTop: 55,
-        backgroundColor: '#A0A0A0',
+        // paddingTop: 20,
+        backgroundColor: '#F5F6FA',
         alignItems: 'center',
         justifyContent: 'center',
       }}
@@ -146,61 +159,6 @@ export const CommunityPage = (): React.ReactNode => {
         onScroll={handleScroll}
         scrollEventThrottle={16}
       >
-        <Card
-          style={{
-            backgroundColor: '#fff',
-            flexDirection: 'row',
-            justifyContent: 'space-evenly',
-            width: Dimensions.get('window').width * 0.97,
-            alignItems: 'center',
-          }}
-        >
-          <Button
-            style={{
-              justifyContent: 'center',
-              alignItems: 'center',
-              backgroundColor: 'white',
-            }}
-            textStyle={{
-              color: 'black',
-            }}
-            onClick={() => setShowSettingModal(true)}
-          >
-            <AntIcon
-              name="setting"
-              style={{
-                fontSize: 45,
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}
-            />
-          </Button>
-          <View
-            style={{
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
-          >
-            <Typography
-              variant="title"
-              style={{ fontSize: 35 }}
-            >
-              MD and We
-            </Typography>
-            <Typography>Welcome to the Community!</Typography>
-          </View>
-          <View
-            style={{
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
-          >
-            <FAIcon
-              name="group"
-              style={{ fontSize: 40 }}
-            />
-          </View>
-        </Card>
         <PostList
           posts={posts}
           handleSelectedPostClick={handleSelectedPostClick}
@@ -209,7 +167,7 @@ export const CommunityPage = (): React.ReactNode => {
         {metaData.next === null && metaData.prev !== null ? (
           <Badge
             size="medium"
-            variant="success"
+            color="green"
             leftIcon={
               <AntIcon
                 name="check"
@@ -219,11 +177,34 @@ export const CommunityPage = (): React.ReactNode => {
           >
             That's All Folks!
           </Badge>
+        ) : error ? (
+          <Badge
+            size="medium"
+            color="red"
+            leftIcon={
+              <IonIcon
+                name="alert"
+                style={{ transform: [{ scale: 2.0 }], color: 'red' }}
+              />
+            }
+            style={{
+              paddingBottom: 25,
+            }}
+          >
+            There Was An Error!
+          </Badge>
         ) : (
-          <LoadingComponent
-            variant="large"
-            style={{ color: 'white' }}
-          />
+          <View
+            style={{
+              width: '100%',
+              paddingBottom: 40,
+            }}
+          >
+            <LoadingComponent
+              variant="large"
+              style={{ color: 'white' }}
+            />
+          </View>
         )}
       </ScrollView>
       <Modal
@@ -237,13 +218,6 @@ export const CommunityPage = (): React.ReactNode => {
           selectedPost={selectedPost}
           handlePostHugClick={handleHugClick}
         />
-      </Modal>
-      <Modal
-        open={showSettingModal}
-        onClose={() => setShowSettingModal(false)}
-        title="User Settings"
-      >
-        <Settings onClose={() => setShowSettingModal(false)} />
       </Modal>
     </View>
   );

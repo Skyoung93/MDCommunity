@@ -40,8 +40,7 @@ const sizeClasses = StyleSheet.create({
     paddingTop: 5,
   },
   small: {
-    transform: [{ scale: 1.0 }],
-    paddingTop: 5,
+    transform: [{ scale: 1.5 }],
   },
   medium: {
     transform: [{ scale: 1.5 }],
@@ -76,9 +75,9 @@ const LoadingComponent = ({
 
   return (
     <View style={styles.container}>
-      <Text style={[textStyle, style]}>{header}</Text>
+      {variant !== 'small' && <Text style={[textStyle, style]}>{header}</Text>}
       <ActivityIndicator
-        color="#ffffff"
+        color="#000000"
         style={[styles.spinner, size]}
       />
     </View>

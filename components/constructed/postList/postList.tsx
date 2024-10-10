@@ -25,7 +25,11 @@ export const PostList = ({
   return (
     <View
       style={{
-        gap: 7,
+        width: '100%',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        padding: 10,
+        gap: 25,
       }}
     >
       {posts.map((post, index) => {

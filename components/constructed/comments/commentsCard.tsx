@@ -31,7 +31,7 @@ export const CommentsCard: React.FC<CommentsCardProps> = ({
 
   return (
     <View>
-      <Typography variant="title">{`Comments (${commentCount})`}</Typography>
+      <Typography size="title">{`Comments (${commentCount})`}</Typography>
       {nestedComments.map((comment) => (
         <CommentEntry
           key={comment.id}

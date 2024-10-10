@@ -19,22 +19,6 @@ type FullScreenModalProps = {
   title: string;
   children: React.ReactNode;
 };
-type RegularModalProps = {
-  onClose?: () => void;
-  children: React.ReactNode;
-};
-
-const cardStyle = {
-  borderRadius: 15,
-  backgroundColor: '#ffffff',
-  shadowColor: '#000',
-  shadowOffset: { width: 4, height: 4 },
-  shadowOpacity: 0.3,
-  shadowRadius: 10,
-  elevation: 5, // Android specific shadow
-  minHeight: 100,
-  padding: 10,
-};
 
 const FullScreenModal: React.FC<FullScreenModalProps> = ({
   onClose,
@@ -43,7 +27,15 @@ const FullScreenModal: React.FC<FullScreenModalProps> = ({
 }) => (
   <View
     style={{
-      ...cardStyle,
+      borderRadius: 15,
+      backgroundColor: '#ffffff',
+      shadowColor: '#000',
+      shadowOffset: { width: 4, height: 4 },
+      shadowOpacity: 0.3,
+      shadowRadius: 10,
+      elevation: 5, // Android specific shadow
+      minHeight: 100,
+      padding: 10,
       alignItems: 'center',
       justifyContent: 'flex-start',
       width: '100%',
@@ -68,7 +60,7 @@ const FullScreenModal: React.FC<FullScreenModalProps> = ({
       </TouchableOpacity>
       {title && (
         <Typography
-          variant="title"
+          size="title"
           style={{ marginLeft: 10 }}
         >
           {title}
@@ -88,6 +80,10 @@ const FullScreenModal: React.FC<FullScreenModalProps> = ({
   </View>
 );
 
+type RegularModalProps = {
+  onClose?: () => void;
+  children: React.ReactNode;
+};
 const RegularModal: React.FC<RegularModalProps> = ({ onClose, children }) => (
   <Card
     style={{
@@ -95,6 +91,7 @@ const RegularModal: React.FC<RegularModalProps> = ({ onClose, children }) => (
       justifyContent: 'center',
       zIndex: 2,
       width: 'auto',
+      backgroundColor: 'white',
     }}
   >
     <TouchableOpacity
@@ -114,7 +111,8 @@ const RegularModal: React.FC<RegularModalProps> = ({ onClose, children }) => (
 
     <View
       style={{
-        paddingTop: 45,
+        paddingTop: 50,
+        paddingBottom: 25,
       }}
     >
       {children}

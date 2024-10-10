@@ -11,7 +11,7 @@ import { Comment, FocusedEntryType } from 'types/comment';
 import { convertToHexCode } from 'utils/convertToHexCode';
 import { useState } from 'react';
 import { Post } from 'types/post';
-import { useDatastoreContext } from 'state/communityContext';
+import { useCommunityContext } from 'state/communityContext';
 import { useUserContext } from 'state/userContext';
 import StatusCode from 'types/statusCodes';
 
@@ -58,7 +58,7 @@ const AddCommentToCommentCard: React.FC<AddToCommentProps> = ({
   comment,
   closeCommentsCard,
 }) => {
-  const { addCommentToCommentFn } = useDatastoreContext();
+  const { addCommentToCommentFn } = useCommunityContext();
   const { name } = useUserContext();
   const { id: commentID, text, display_name, created_at } = comment;
   const { backgroundColor, textColor } = convertToHexCode(display_name);
@@ -81,10 +81,11 @@ const AddCommentToCommentCard: React.FC<AddToCommentProps> = ({
     <KeyboardAvoidingView
       style={{
         flex: 1,
+        justifyContent: 'space-between',
       }}
       behavior="padding"
     >
-      <View style={{ padding: 10 }}>
+      <View>
         <Card style={{ paddingHorizontal: 15, paddingVertical: 10 }}>
           <View
             style={{
@@ -105,50 +106,59 @@ const AddCommentToCommentCard: React.FC<AddToCommentProps> = ({
               style={{ backgroundColor }}
             >
               <Typography
-                variant="default"
-                style={{ fontWeight: 'bold', color: textColor }}
+                size="large"
+                style={{ color: textColor }}
               >
                 {display_name}
               </Typography>
             </Badge>
-            <Typography variant="small">
+            <Typography size="medium">
               {formatDistanceToNow(created_at, { addSuffix: true })}
             </Typography>
           </View>
           <View style={{ padding: 10 }}>
-            <Typography variant="default">{text}</Typography>
+            <Typography size="medium">{text}</Typography>
           </View>
         </Card>
       </View>
 
-      <View style={{ flex: 1, paddingHorizontal: 10, paddingBottom: 10 }}>
-        <Card
+      <View
+        style={{
+          flexShrink: 1,
+          marginBottom: 20,
+
+          flexDirection: 'row',
+          justifyContent: 'center',
+          alignItems: 'flex-end',
+          marginHorizontal: 15,
+
+          borderRadius: 30,
+          borderWidth: 2,
+          borderStyle: 'solid',
+          borderColor: 'black',
+        }}
+      >
+        <Input
+          useFlex
+          multiline
+          value={inputText}
+          onChange={setInputText}
+          style={{ paddingBottom: 7 }}
+        />
+        <Button
           style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            gap: 5,
+            paddingHorizontal: 7,
+            paddingVertical: 7,
           }}
-        >
-          <View style={{ flex: 1 }}>
-            <Input
-              inputStyle={{ paddingBottom: 5, minHeight: 100 }}
-              multiline
-              style={{ flexGrow: 1 }}
-              value={inputText}
-              onChange={setInputText}
+          size="medium"
+          leftIcon={
+            <FAIcon
+              name="arrow-circle-o-up"
+              size={32}
             />
-          </View>
-          <Button
-            size="medium"
-            leftIcon={
-              <FAIcon
-                name="arrow-circle-o-up"
-                size={23}
-              />
-            }
-            onClick={handleSendMessage}
-          />
-        </Card>
+          }
+          onClick={handleSendMessage}
+        />
       </View>
     </KeyboardAvoidingView>
   );
@@ -164,7 +174,7 @@ const AddCommentToPostCard: React.FC<AddToPostProps> = ({
   index,
   closeCommentsCard,
 }) => {
-  const { addCommentToPostFn } = useDatastoreContext();
+  const { addCommentToPostFn } = useCommunityContext();
   const { name } = useUserContext();
   const { post_url, created_at, title } = post;
   const { backgroundColor, textColor } = convertToHexCode(post_url);
@@ -185,10 +195,11 @@ const AddCommentToPostCard: React.FC<AddToPostProps> = ({
     <KeyboardAvoidingView
       style={{
         flex: 1,
+        justifyContent: 'space-between',
       }}
       behavior="padding"
     >
-      <View style={{ padding: 10 }}>
+      <View>
         <Card style={{ paddingHorizontal: 15, paddingVertical: 10 }}>
           <View
             style={{
@@ -209,50 +220,59 @@ const AddCommentToPostCard: React.FC<AddToPostProps> = ({
               style={{ backgroundColor }}
             >
               <Typography
-                variant="default"
-                style={{ fontWeight: 'bold', color: textColor }}
+                size="large"
+                style={{ color: textColor }}
               >
                 {userInfo}
               </Typography>
             </Badge>
-            <Typography variant="small">
+            <Typography size="medium">
               {formatDistanceToNow(created_at, { addSuffix: true })}
             </Typography>
           </View>
           <View style={{ padding: 10 }}>
-            <Typography variant="default">{titleInfo}</Typography>
+            <Typography size="medium">{titleInfo}</Typography>
           </View>
         </Card>
       </View>
 
-      <View style={{ flex: 1, paddingHorizontal: 10, paddingBottom: 10 }}>
-        <Card
+      <View
+        style={{
+          flexShrink: 1,
+          marginBottom: 20,
+
+          flexDirection: 'row',
+          justifyContent: 'center',
+          alignItems: 'flex-end',
+          marginHorizontal: 15,
+
+          borderRadius: 30,
+          borderWidth: 2,
+          borderStyle: 'solid',
+          borderColor: 'black',
+        }}
+      >
+        <Input
+          useFlex
+          multiline
+          value={inputText}
+          onChange={setInputText}
+          style={{ paddingBottom: 7 }}
+        />
+        <Button
           style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            gap: 5,
+            paddingHorizontal: 7,
+            paddingVertical: 7,
           }}
-        >
-          <View style={{ flex: 1 }}>
-            <Input
-              inputStyle={{ paddingBottom: 5, minHeight: 100 }}
-              multiline
-              style={{ flexGrow: 1 }}
-              value={inputText}
-              onChange={setInputText}
+          size="medium"
+          leftIcon={
+            <FAIcon
+              name="arrow-circle-o-up"
+              size={32}
             />
-          </View>
-          <Button
-            size="medium"
-            leftIcon={
-              <FAIcon
-                name="arrow-circle-o-up"
-                size={23}
-              />
-            }
-            onClick={handleSendMessage}
-          />
-        </Card>
+          }
+          onClick={handleSendMessage}
+        />
       </View>
     </KeyboardAvoidingView>
   );

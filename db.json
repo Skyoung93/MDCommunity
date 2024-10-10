@@ -32,7 +32,8 @@
           "display_name": "Archie",
           "text": "I tried this before, it helped in the moment but not really later. did a bunch of PT as well",
           "created_at": "2024-02-15T19:44:05.153259",
-          "num_hugs": 1
+          "num_hugs": 1,
+          "userHugged": false
         },
         "4": {
           "id": 4,
@@ -48,7 +49,8 @@
           "display_name": "Sean",
           "text": "I can confirm, PT works wonders if you stick with it",
           "created_at": "2024-03-15T19:44:05.153259",
-          "num_hugs": 1
+          "num_hugs": 2,
+          "userHugged": true
         },
         "6": {
           "id": 6,
@@ -56,6 +58,24 @@
           "display_name": "",
           "text": "Weird…",
           "created_at": "2024-09-21T10:33:56.169Z",
+          "num_hugs": 1,
+          "userHugged": true
+        },
+        "7": {
+          "id": 7,
+          "parent_id": null,
+          "display_name": "John Doe",
+          "text": "Hello",
+          "created_at": "2024-09-21T21:17:58.077Z",
+          "num_hugs": 1,
+          "userHugged": true
+        },
+        "8": {
+          "id": 8,
+          "parent_id": null,
+          "display_name": "BIG POPPA",
+          "text": "Test",
+          "created_at": "2024-09-26T20:14:15.744Z",
           "num_hugs": 1,
           "userHugged": true
         }
@@ -337,7 +357,26 @@
       "patient_description": "A 28-year-old individual with a sex assigned at birth as other is experiencing severe lower back pain, rated 8 out of 10, which has been constant for two days. The patient also reports heightened sensitivity to touch, headaches, and hot and cold flashes. Additionally, there is a sensation of tingling or numbness in the extremities. The patient has a recent diagnosis of Hepatitis C from a few months ago and is currently taking Ibuprofen 800mg. There are no known allergies or adverse reactions to medications, no recent injuries, infections, or significant weight changes, and no family history of autoimmune diseases or other chronic conditions. No loss of bowel or bladder control or leg weakness has been reported.",
       "assessment": "### What might be happening\n\nBased on the information you've provided, here are some possible causes for your symptoms:\n\n- **Fibromyalgia**: This is a chronic condition characterized by widespread pain, sensitivity to touch, and often accompanied by fatigue, sleep, memory and mood issues. It's often associated with tension headaches, temporomandibular joint (TMJ) disorders, irritable bowel syndrome, anxiety, and depression. The exact cause is unknown, but it's thought to involve a variety of genetic, environmental, and psychological factors.\n  - Treatment typically includes both medication and non-drug therapies such as physical therapy, counseling, and alternative treatments like acupuncture.\n\n- **Viral infection**: Some viral infections can cause body aches, headache, and fever. The fact that you have Hepatitis C might make you more susceptible to other infections.\n  - Treatment usually involves rest, hydration, and over-the-counter medications for symptom relief.\n\n- **Side effects of medication**: Ibuprofen can sometimes cause headaches and other side effects. However, it's less likely to cause the other symptoms you're experiencing.\n  - If you suspect your symptoms might be due to medication side effects, it's important to talk to your doctor before making any changes to your medication regimen.\n\nPlease note that these are just possibilities and not a definitive diagnosis. It's important to consult with a healthcare professional who can evaluate your symptoms in person.\n\n### What you can do\n\nIn the meantime, here are some things you can do to manage your symptoms:\n\n1. Rest and stay hydrated.\n2. Continue taking your prescribed medications unless advised otherwise by your doctor.\n3. Try gentle exercises like stretching or yoga to help alleviate body pain.\n4. Use a heating pad or warm compress on your lower back to help relieve pain.\n5. Over-the-counter pain relievers can help with body aches and headaches, but be sure not to exceed the recommended dose.\n\n### What you should look out for\n\nYou should seek immediate medical attention if you experience any of the following:\n\n- Severe pain that doesn't improve with rest or over-the-counter medications\n- Difficulty moving or walking\n- Confusion, difficulty speaking, or slurred speech\n- Loss of consciousness\n- High fever (over 101°F)\n\nRemember, this advice is intended to be general in nature, and specific causes may not apply to your situation. Always consult with a healthcare provider for appropriate examination, testing, and care recommendations.",
       "question": "",
-      "comments": {},
+      "comments": {
+        "1": {
+          "id": 1,
+          "parent_id": null,
+          "display_name": "John Doe",
+          "text": "Test",
+          "created_at": "2024-09-26T20:13:34.961Z",
+          "num_hugs": 1,
+          "userHugged": true
+        },
+        "2": {
+          "id": 2,
+          "parent_id": 1,
+          "display_name": "John Doe",
+          "text": "Hello",
+          "created_at": "2024-09-26T20:13:48.977Z",
+          "num_hugs": 1,
+          "userHugged": true
+        }
+      },
       "id": "5e1d"
     },
     {
@@ -716,7 +755,75 @@
       "id": "045e"
     }
   ],
+  "journey": [
+    {
+      "id": "0",
+      "title": "Arm Pain",
+      "description": "You've been experiencing a shooting pain up and down your right arm",
+      "isComplete": true,
+      "startDate": "2024-08-15T07:00:00.000Z",
+      "endDate": "2024-08-18T10:08:15.557Z",
+      "plan": true,
+      "track": true,
+      "reassess": true
+    },
+    {
+      "id": "1",
+      "title": "Flu-like Symptoms",
+      "description": "You've been experiencing a cough and a fever",
+      "isComplete": true,
+      "startDate": "2024-05-01T07:00:00.000Z",
+      "endDate": "2024-05-05T07:00:00.000Z",
+      "plan": true,
+      "track": true,
+      "reassess": true
+    },
+    {
+      "id": "2",
+      "title": "Headache",
+      "description": "You've been experiencing pounding headaches with increased frequency",
+      "isComplete": true,
+      "startDate": "2024-03-14T07:00:00.000Z",
+      "endDate": "2024-03-15T07:00:00.000Z",
+      "plan": true,
+      "track": true,
+      "reassess": true
+    },
+    {
+      "id": "3",
+      "title": "Constiptation",
+      "description": "You've recently been experiencing hard bowel movements with reduced frequency",
+      "isComplete": false,
+      "startDate": "2024-09-19T07:00:00.000Z",
+      "endDate": null,
+      "plan": true,
+      "track": true,
+      "reassess": false
+    },
+    {
+      "id": "4",
+      "title": "Heartburn",
+      "description": "You first reported heartburn after eating a large meal and going to the gym",
+      "isComplete": false,
+      "startDate": "2024-09-20T07:00:00.000Z",
+      "endDate": null,
+      "plan": true,
+      "track": false,
+      "reassess": false
+    },
+    {
+      "id": "5",
+      "title": "Shoulder Pain",
+      "description": "You first an acute injury during exercise, then an inability to use your arm for days after",
+      "isComplete": false,
+      "startDate": "2022-02-14T07:00:00.000Z",
+      "endDate": null,
+      "plan": true,
+      "track": true,
+      "reassess": true
+    }
+  ],
   "user": {
-    "name": "John Doe"
+    "name": "Testerson"
   }
 }
