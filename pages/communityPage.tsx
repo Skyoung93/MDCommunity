@@ -21,16 +21,12 @@ import {
   CommunityDataProvider,
   useCommunityContext,
 } from 'state/communityContext';
-import { UserDataProvider } from 'state/userContext';
-import { ErrorPage } from './errorPage';
 
 export const CommunityPage = (): React.ReactNode => {
   return (
-    <UserDataProvider>
-      <CommunityDataProvider>
-        <CommunityPageContent />
-      </CommunityDataProvider>
-    </UserDataProvider>
+    <CommunityDataProvider>
+      <CommunityPageContent />
+    </CommunityDataProvider>
   );
 };
 

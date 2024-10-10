@@ -16,7 +16,7 @@ Takehome Task for MDandMe
     npx json-server db.json
    ```
 
-3. Start the app
+3. Start the app in another terminal
 
    ```bash
     npm start

@@ -4,12 +4,14 @@ import { Modal as RNModal, View, TouchableOpacity } from 'react-native';
 import { pageOptions, PageOptions } from 'types/pages';
 
 type NavigationPanelProps = {
+  currentPage: PageOptions;
   open: boolean;
   onClose: () => void;
   navigateToPage: (page: PageOptions) => void;
 };
 
 export const NavigationPanel = ({
+  currentPage,
   open,
   onClose,
   navigateToPage,
@@ -59,10 +61,17 @@ export const NavigationPanel = ({
                 gap: 25,
               }}
             >
-              <Typography size="pageTitle">Navigation</Typography>
+              <View
+                style={{
+                  paddingLeft: 15,
+                }}
+              >
+                <Typography size="pageTitle">App Navigation</Typography>
+              </View>
               {pageOptions.map((page) => (
                 <Button
                   key={`${page}`}
+                  color={page === currentPage ? 'green' : null}
                   size="navigation"
                   onClick={() => {
                     navigateToPage(page as PageOptions);
